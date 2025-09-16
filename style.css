@@ -1,0 +1,97 @@
+/* ==================== RASCA Y GANA ==================== */
+/* Contenedor de la tarjeta a rascar (reemplaza visualmente a la ruleta) */
+.scratch-card {
+  position: relative;
+  width: 90vw;
+  max-width: 420px;
+  /* formato de carta vertical; podés usar 9/14 ó 1/1 si querés cuadrado */
+  aspect-ratio: 9 / 14;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
+
+  /* estética Atlantis (matching ruleta) */
+  box-shadow:
+    0 0 20px rgba(0, 255, 208, 0.4),
+    0 0 40px rgba(0, 199, 128, 0.25);
+}
+
+/* Capa inferior donde va la imagen/arte del premio y el texto grande */
+.prize-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.prize-layer img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* usá contain si la imagen tiene margenes */
+}
+
+/* Texto del premio sobre la carta (el JS setea su contenido) */
+.prize-text {
+  position: relative; /* por encima de la imagen */
+  z-index: 2;
+  padding: 0 14px;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 900;
+  font-size: clamp(24px, 6vw, 44px);
+  color: #ffffff;
+  text-shadow:
+    0 0 12px #00ffd0,
+    0 0 28px #00c780;
+}
+
+/* Canvas que actúa como “raspadita” encima del premio */
+#scratch-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;           /* Mejora trazo en mobile */
+  -ms-touch-action: none;
+  -webkit-user-select: none;    /* Evita selección accidental */
+  user-select: none;
+}
+
+/* Pie de ayuda */
+.hint {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  font-size: 14px;
+  line-height: 1.2;
+  color: #fff;
+  opacity: 0.9;
+
+  background: rgba(0, 0, 0, 0.35);
+  padding: 6px 10px;
+  border-radius: 10px;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
+  z-index: 3; /* sobre el canvas */
+}
+
+/* Si querés variante 1:1 cuadrada, podés sobreescribir así: */
+/*
+.scratch-card { aspect-ratio: 1 / 1; }
+*/
+
+/* ==================== MEDIA QUERIES (RASCA) ==================== */
+@media screen and (max-width: 400px) {
+  .scratch-card {
+    max-width: 330px;
+  }
+  .prize-text {
+    font-size: clamp(22px, 6.2vw, 38px);
+  }
+  .hint {
+    font-size: 13px;
+  }
+}
