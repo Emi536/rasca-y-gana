@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rasca y Gana Atlantis</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <!-- Pantalla de carga -->
+  <div class="loading-screen" id="loading">
+    <img src="assets/fondo.png" alt="Fondo" class="background"/>
+
+    <!-- Barra de carga sobrepuesta al fondo -->
+    <div class="barra-superpuesta">
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+          <div class="progress-bubble" id="progress-bubble">
+            <div class="glow"></div>
+            <div class="percentage" id="progress-text">0%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <!-- Logo ATLANTIS PLAY + tridente -->
+      <div class="logo-container">
+        <img src="assets/tridente.png" alt="Tridente" class="tridente"/>
+        <img src="assets/logo.png" alt="Atlantis Play" class="atlantis"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pantalla de juego -->
+  <div class="game-screen" id="game" style="display: none;">
+    <!-- LOGO SUPERIOR ATLANTIS -->
+    <div class="logo-atlantis">
+      <img src="assets/logo-atlantis-play.png" alt="Atlantis Play Logo" />
+    </div>
+
+    <!-- 🔹 Rasca y Gana (reemplaza la ruleta) -->
+    <div class="scratch-card">
+      <!-- Capa inferior con el premio (imagen + texto). El texto lo setea el JS -->
+      <div class="prize-layer">
+        <img id="prize-image" src="assets/prize-card.png" alt="Premio" />
+        <div class="prize-text" id="prize-text">PREMIO</div>
+      </div>
+
+      <!-- Capa superior a rascar (canvas) -->
+      <canvas id="scratch-canvas"></canvas>
+
+      <!-- Hint opcional -->
+      <div class="hint">Rascá con tu dedo o mouse para descubrir tu premio</div>
+    </div>
+  </div>
+
+  <!-- POPUP DE PREMIO -->
+  <div id="popup-premio" class="popup-container hidden">
+    <div class="popup">
+      <button class="cerrar-btn" onclick="cerrarPopup()">X</button>
+      <h2>¡GANASTE!</h2>
+      <h1 id="texto-premio">BONO 100%</h1>
+      <p id="detalle-premio"></p>
+      <button class="aceptar-btn" onclick="cerrarPopup()">ACEPTAR</button>
+    </div>
+  </div>
+
+  <!-- POPUP DE AVISO 🌊 -->
+  <div id="popup-aviso" class="popup-container hidden">
+    <div class="popup">
+      <button class="cerrar-btn" onclick="cerrarPopupAviso()">X</button>
+      <h2>¡Hola!</h2>
+      <h1 style="font-size: 20px;">Ya usaste tu oportunidad.<br>Volvé mañana🌊</h1>
+      <button class="aceptar-btn" onclick="cerrarPopupAviso()">Aceptar</button>
+    </div>
+  </div>
+
+  <!-- 🎵 Audio ambiente -->
+  <audio id="musica-fondo" src="assets/ipanema.mp3" loop preload="auto"></audio>
+
+  <!-- ✍️ Sonido de rascar -->
+  <audio id="sonido-rascar" src="assets/scratch.mp3" preload="auto"></audio>
+
+  <!-- 🎉 Sonido ganador -->
+  <audio id="sonido-ganador" src="assets/ganador.mp3" preload="auto"></audio>
+
+  <script>
+    // Activar sonido con la primera interacción (igual que tu ruleta)
+    document.addEventListener("click", () => {
+      const audio = document.getElementById("musica-fondo");
+      if (audio && audio.paused) {
+        audio.volume = 0.4;
+        audio.play().catch(() => {});
+      }
+    }, { once: true });
+  </script>
+
+  <!-- Importante: en el Rasca el JS principal será scratch.js -->
+  <script src="scratch.js"></script>
+
+</body>
+</html>
